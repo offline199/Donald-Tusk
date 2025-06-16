@@ -32,8 +32,8 @@ with tempfile.NamedTemporaryFile('w+', delete=False, suffix='.js', encoding='UTF
     js_filename = js_file.name
 
 try:
-    result = subprocess.run(['bun', js_filename], capture_output=True, text=True, check=True, encoding='UTF-8')
-    json_output = result.stdout.strip()
+    result = subprocess.run(['bun', js_filename], capture_output=True, check=True)
+    json_output = result.stdout.decode('utf-8', errors='replace').strip()
     data = json.loads(json_output)
 finally:
     os.remove(js_filename)
